@@ -1,3 +1,7 @@
+.PHONY: install
+install: all
+	cp usb1208FS.py _usb1208FS.so ..
+
 .PHONY: all
 all: udev-install _usb1208FS.so
 
