@@ -1,16 +1,21 @@
-.PHONY: install
-install: all
-	cp usb1208FS.py _usb1208FS.so ..
+INSTALL_DIR =
+INSTALL_FILES = usb1208FS.py _usb1208FS.so
 
-.PHONY: all
-all: udev-install _usb1208FS.so
+.PHONY: install
+install: udev-install $(INSTALL_FILES)
+	@if [ ! -d "$(INSTALL_DIR)" ] ; then				\
+	    echo "INSTALL_DIR is not defined" >&2 ; 			\
+	else								\
+	    cp $(INSTALL_FILES) $(INSTALL_DIR) ;			\
+	    echo "Installed files $(INSTALL_FILES) in $(INSTALL_DIR)" ;	\
+	fi
 
 .PHONY: udev-install
 udev-install:
 	sudo cp 50-1208fs.rules /etc/udev/rules.d/
 	sudo udevadm control --reload
 
-_usb1208FS_module.c: usb-1208FS.i usb-1208FS.h pmd.h
+_usb1208FS_module.c usb1208FS.py: usb-1208FS.i usb-1208FS.h pmd.h
 	swig -python -o _usb1208FS_module.c usb-1208FS.i
 
 pmd.o: pmd.c pmd.h
