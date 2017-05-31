@@ -12,8 +12,13 @@ install: udev-install $(INSTALL_FILES)
 
 .PHONY: udev-install
 udev-install:
-	sudo cp 50-1208fs.rules /etc/udev/rules.d/
-	sudo udevadm control --reload
+	@if [ "$$(id -u)" != 0 ] ; then				\
+	    echo "Must be root for installing the udev rules" ;	\
+	else							\
+	    cp 50-1208fs.rules /etc/udev/rules.d/ ;		\
+	    udevadm control --reload ;				\
+	    echo "Installed the udev rules" ;			\
+	fi
 
 _usb1208FS_module.c usb1208FS.py: usb-1208FS.i usb-1208FS.h pmd.h
 	swig -python -o _usb1208FS_module.c usb-1208FS.i
