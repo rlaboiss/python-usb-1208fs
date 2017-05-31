@@ -1,8 +1,11 @@
 INSTALL_DIR =
 INSTALL_FILES = usb1208FS.py _usb1208FS.so
 
+.PHONY: all
+all: $(INSTALL_FILES)
+
 .PHONY: install
-install: udev-install $(INSTALL_FILES)
+install: all
 	@if [ ! -d "$(INSTALL_DIR)" ] ; then				\
 	    echo "INSTALL_DIR is not defined" >&2 ; 			\
 	else								\
