@@ -34,4 +34,4 @@ _usb1208FS.so: _usb1208FS_module.o usb-1208FS.o pmd.o
 
 .PHONY: clean
 clean:
-	rm -f pmd.o _usb1208FS_module.o usb-1208FS.o usb1208FS.py usb1208FS.pyc _usb1208FS.so
+	rm -f pmd.o _usb1208FS_module.* usb-1208FS.o usb1208FS.py usb1208FS.pyc _usb1208FS.so
